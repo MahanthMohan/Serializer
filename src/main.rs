@@ -3,6 +3,7 @@ use std::env;
 use std::fmt::{Debug, Display};
 use std::fs::File;
 use std::io::prelude::*;
+use std::process;
 use std::str::FromStr;
 
 pub struct Json<V: FromStr + Debug + Display> {
@@ -39,7 +40,7 @@ impl<V: FromStr + Debug + Display> Json<V> {
             .expect("Error reading source file");
 
         if !contents.starts_with("{") && !contents.ends_with("}") {
-            return;
+            process::exit(1);
         }
 
         let parsed_contents = contents.replace("{", "").replace("}", "").replace("\n", "");
