@@ -1,5 +1,4 @@
 use std::collections::HashMap;
-use std::env;
 use std::fmt::{Debug, Display};
 use std::fs::File;
 use std::io::prelude::*;
@@ -64,13 +63,33 @@ impl<V: FromStr + Debug + Display> Json<V> {
             self.data.insert(key, parsed_value);
         }
     }
+
+    pub fn get_keys(&self) -> Vec<&String> {
+        let keys: Vec<&String> = self.data.keys().collect();
+        keys
+    }
+
+    pub fn get_values(&self) -> Vec<&V> {
+        let values: Vec<&V> = self.data.values().collect();
+        values
+    }
 }
 
-fn main() {
-    let args: Vec<String> = env::args().collect();
-    let mut src = File::open(&args[1]).expect("Error opening file");
-    let mut json_data: Json<i32> = Json::new();
-    json_data.decode(&mut src);
-    let encoded_data = json_data.encode(2);
-    println!("{}", encoded_data);
+#[cfg(test)]
+mod tests {
+    use super::*;
+    
+    #[test]
+    fn test() {
+        let mut json_data: Json<i32> = Json::new();
+        let mut src = File::open("sample.json").unwrap();
+
+        json_data.decode(&mut src);
+        
+        let encoded_data = json_data.encode(2);
+        let mut actual = String::new();
+        src.read_to_string(&mut actual).unwrap();
+
+        assert_eq!(actual, encoded_data);
+    }
 }
