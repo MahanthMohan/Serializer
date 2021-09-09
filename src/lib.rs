@@ -26,6 +26,7 @@ impl<V: FromStr + Debug + Display> Json<V> {
                 format!("{}\"{}\":{}{},\n", indent_space, key, indent_space, value).as_str(),
             );
         }
+     
         result.push_str("}");
         result
     }
