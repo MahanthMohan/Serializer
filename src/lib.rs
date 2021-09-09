@@ -65,13 +65,11 @@ impl<V: FromStr + Debug + Display> Json<V> {
     }
 
     pub fn get_keys(&self) -> Vec<&String> {
-        let keys: Vec<&String> = self.data.keys().collect();
-        keys
+        self.data.keys().collect::<Vec<&String>>()
     }
 
     pub fn get_values(&self) -> Vec<&V> {
-        let values: Vec<&V> = self.data.values().collect();
-        values
+        self.data.values().collect::<Vec<&V>>()
     }
 }
 
@@ -88,7 +86,8 @@ mod tests {
         
         let encoded_data = json_data.encode(2);
         let mut actual = String::new();
-        src.read_to_string(&mut actual).unwrap();
+        let mut f = File::open("sample.json").unwrap();
+        f.read_to_string(&mut actual).unwrap();
 
         assert_eq!(actual, encoded_data);
     }
