@@ -20,13 +20,13 @@ impl<V: FromStr + Debug + Display> Json<V> {
     ///
     /// # Examples
     ///
-    /// ```
-    /// # extern crate json_serializer;
-    /// # use std::fs::File;
-    /// # let json_data: Json<i32> = Json::new();
-    /// # let f = File::open("source.json").unwrap();
-    /// # json_data.decode(&mut f);
-    /// # println!("Encoded Data:\n{}", json_data.encode(2));
+    /// ```rust
+    /// extern crate json_serializer;
+    /// use std::fs::File;
+    /// let json_data: Json<i32> = Json::new();
+    /// let f = File::open("source.json").unwrap();
+    /// json_data.decode(&mut f);
+    /// println!("Encoded Data:\n{}", json_data.encode(2));
     /// ```
     pub fn encode(&self, indent: usize) -> String {
         let mut result = String::new();
@@ -47,13 +47,13 @@ impl<V: FromStr + Debug + Display> Json<V> {
     ///
     /// # Examples
     ///
-    /// ```
-    /// # extern crate json_serializer;
-    /// # use std::fs::File;
-    /// # let json_data: Json<i32> = Json::new();
-    /// # let f = File::open("source.json").unwrap();
-    /// # json_data.decode(&mut f);
-    /// # println!("Encoded Data:\n{}", json_data.encode(2));
+    /// ```rust
+    /// extern crate json_serializer;
+    /// use std::fs::File;
+    /// let json_data: Json<i32> = Json::new();
+    /// let f = File::open("source.json").unwrap();
+    /// json_data.decode(&mut f);
+    /// println!("Encoded Data:\n{}", json_data.encode(2));
     /// ```
     pub fn decode(&mut self, src: &mut File)
     where
@@ -94,14 +94,14 @@ impl<V: FromStr + Debug + Display> Json<V> {
     /// # Examples
     ///
     /// ```
-    /// # extern crate json_serializer;
-    /// # use std::fs::File;
-    /// # let json_data: Json<i32> = Json::new();
-    /// # let f = File::open("source.json").unwrap();
-    /// # json_data.decode(&mut f);
-    /// # for json_data.get_keys().map(|key| {
-    /// #     println!(key);
-    /// # });
+    /// extern crate json_serializer;
+    /// use std::fs::File;
+    /// let json_data: Json<i32> = Json::new();
+    /// let f = File::open("source.json").unwrap();
+    /// json_data.decode(&mut f);
+    /// for json_data.get_keys().map(|key| {
+    ///     println!(key);
+    /// });
     /// ```
     pub fn get_keys(&self) -> Vec<&String> {
         self.data.keys().collect::<Vec<&String>>()
@@ -112,14 +112,14 @@ impl<V: FromStr + Debug + Display> Json<V> {
     /// # Examples
     ///
     /// ```
-    /// # extern crate json_serializer;
-    /// # use std::fs::File;
-    /// # let json_data: Json<i32> = Json::new();
-    /// # let f = File::open("source.json").unwrap();
-    /// # json_data.decode(&mut f);
-    /// # for json_data.get_values().map(|val| {
-    /// #     println!("{:?}", val);
-    /// # });
+    /// extern crate json_serializer;
+    /// use std::fs::File;
+    /// let json_data: Json<i32> = Json::new();
+    /// let f = File::open("source.json").unwrap();
+    /// json_data.decode(&mut f);
+    /// for json_data.get_values().map(|val| {
+    ///     println!("{:?}", val);
+    /// });
     /// ```
     pub fn get_values(&self) -> Vec<&V> {
         self.data.values().collect::<Vec<&V>>()
