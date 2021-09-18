@@ -16,6 +16,18 @@ impl<V: FromStr + Debug + Display> Json<V> {
         }
     }
 
+    /// Decodes a HashMap of JSON keys and values into a JSON string.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # extern crate json_serializer;
+    /// # use std::fs::File;
+    /// # let json_data: Json<i32> = Json::new();
+    /// # let f = File::open("source.json").unwrap();
+    /// # json_data.decode(&mut f);
+    /// # println!("Encoded Data:\n{}", json_data.encode(2));
+    /// ```
     pub fn encode(&self, indent: usize) -> String {
         let mut result = String::new();
         result.push_str("{\n");
@@ -26,11 +38,23 @@ impl<V: FromStr + Debug + Display> Json<V> {
                 format!("{}\"{}\":{}{},\n", indent_space, key, indent_space, value).as_str(),
             );
         }
-     
+
         result.push_str("}");
         result
     }
 
+    /// Encodes a JSON string read from an utf-8 encoded JSON file into a HashMap.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # extern crate json_serializer;
+    /// # use std::fs::File;
+    /// # let json_data: Json<i32> = Json::new();
+    /// # let f = File::open("source.json").unwrap();
+    /// # json_data.decode(&mut f);
+    /// # println!("Encoded Data:\n{}", json_data.encode(2));
+    /// ```
     pub fn decode(&mut self, src: &mut File)
     where
         <V as FromStr>::Err: Debug + Display,
@@ -65,10 +89,38 @@ impl<V: FromStr + Debug + Display> Json<V> {
         }
     }
 
+    /// Gets all the keys in the HashMap, and collects it into a Vec<String>
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # extern crate json_serializer;
+    /// # use std::fs::File;
+    /// # let json_data: Json<i32> = Json::new();
+    /// # let f = File::open("source.json").unwrap();
+    /// # json_data.decode(&mut f);
+    /// # for json_data.get_keys().map(|key| {
+    /// #     println!(key);
+    /// # });
+    /// ```
     pub fn get_keys(&self) -> Vec<&String> {
         self.data.keys().collect::<Vec<&String>>()
     }
 
+    /// Gets all the keys in the HashMap, and collects it into a Vec<String>
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # extern crate json_serializer;
+    /// # use std::fs::File;
+    /// # let json_data: Json<i32> = Json::new();
+    /// # let f = File::open("source.json").unwrap();
+    /// # json_data.decode(&mut f);
+    /// # for json_data.get_values().map(|val| {
+    /// #     println!("{:?}", val);
+    /// # });
+    /// ```
     pub fn get_values(&self) -> Vec<&V> {
         self.data.values().collect::<Vec<&V>>()
     }
@@ -77,14 +129,14 @@ impl<V: FromStr + Debug + Display> Json<V> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test() {
         let mut json_data: Json<i32> = Json::new();
         let mut src = File::open("sample.json").unwrap();
 
         json_data.decode(&mut src);
-        
+
         let encoded_data = json_data.encode(2);
         let mut actual = String::new();
         let mut f = File::open("sample.json").unwrap();

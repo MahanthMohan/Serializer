@@ -1,9 +1,18 @@
-cargo-features = ["edition2021"]
-
 [package]
-name = "serializer"
-version = "0.1.0"
-edition = "2021"
+name = "json_serializer"
+version = "1.0.0"
+authors = ["Mahanth Mohan <mohan.mahanth@gmail.com>"]
+edition = "2018"
+description = "A simple JSON serializer that can encode and decode data from a file already in valid JSON format into a Hashmap, and deserialize it back into the original JSON string"
+readme = "README.md"
+repository = "https://github.com/mahanthmohan/serializer"
+license-file = "LICENSE"
+keywords = ["json", "serializer", "encoder", "decoder"]
+categories = ["encoding", "parser-implementations", "parsing"]
+exclude = [
+		"sample.json",
+		"Cargo.toml",
+]
 
 [lib]
 crate-type = ["rlib"]
